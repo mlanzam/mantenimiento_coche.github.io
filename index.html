@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#247a5a" />
+    <title>Mantenimiento de mi coche</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="topbar" aria-label="Resumen del coche">
+        <div>
+          <p class="eyebrow">Registro personal</p>
+          <h1>Mantenimiento de mi coche</h1>
+        </div>
+        <div class="vehicle-card">
+          <img class="car-logo" src="assets/car-logo.png" width="96" height="58" alt="" aria-hidden="true" />
+          <label>
+            <span>Coche</span>
+            <input id="vehicleName" type="text" autocomplete="off" placeholder="Ej. Seat León 1.6 TDI" />
+          </label>
+        </div>
+      </section>
+
+      <section class="summary-grid" aria-label="Indicadores">
+        <article class="metric">
+          <span class="metric-label">Gasto total</span>
+          <strong id="totalCost">0,00 €</strong>
+        </article>
+        <article class="metric">
+          <span class="metric-label">Última revisión</span>
+          <strong id="lastService">Sin datos</strong>
+        </article>
+        <article class="metric">
+          <span class="metric-label">Próximo aviso</span>
+          <strong id="nextReminder">Sin datos</strong>
+        </article>
+        <article class="metric">
+          <span class="metric-label">Registros</span>
+          <strong id="recordCount">0</strong>
+        </article>
+      </section>
+
+      <div class="workspace">
+        <section class="panel form-panel" aria-labelledby="formTitle">
+          <div class="panel-heading">
+            <h2 id="formTitle">Nuevo mantenimiento</h2>
+            <button class="icon-button" id="clearForm" type="button" title="Limpiar formulario" aria-label="Limpiar formulario">
+              <span aria-hidden="true">↺</span>
+            </button>
+          </div>
+
+          <form id="maintenanceForm">
+            <input id="recordId" type="hidden" />
+
+            <div class="field-row">
+              <label>
+                <span>Fecha</span>
+                <input id="date" type="date" required />
+              </label>
+              <label>
+                <span>Kilómetros</span>
+                <input id="kilometers" type="number" min="0" step="1" placeholder="125000" required />
+              </label>
+            </div>
+
+            <label>
+              <span>Tipo</span>
+              <select id="type" required>
+                <option value="Aceite y filtros">Aceite y filtros</option>
+                <option value="Neumáticos">Neumáticos</option>
+                <option value="Frenos">Frenos</option>
+                <option value="ITV">ITV</option>
+                <option value="Batería">Batería</option>
+                <option value="Correa">Correa</option>
+                <option value="Otro">Otro</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Taller o lugar</span>
+              <input id="place" type="text" autocomplete="off" placeholder="Nombre del taller" />
+            </label>
+
+            <div class="field-row">
+              <label>
+                <span>Coste</span>
+                <input id="cost" type="number" min="0" step="0.01" placeholder="0,00" />
+              </label>
+              <label>
+                <span>Próximo aviso</span>
+                <input id="nextDate" type="date" />
+              </label>
+            </div>
+
+            <label>
+              <span>Notas</span>
+              <textarea id="notes" rows="4" placeholder="Piezas cambiadas, referencia, observaciones..."></textarea>
+            </label>
+
+            <div class="actions">
+              <button class="primary-button" type="submit">Guardar</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel list-panel" aria-labelledby="recordsTitle">
+          <div class="panel-heading list-heading">
+            <div>
+              <h2 id="recordsTitle">Historial</h2>
+              <p id="emptyHint">Guarda tu primer mantenimiento para verlo aquí.</p>
+            </div>
+            <div class="tools">
+              <label class="search-box">
+                <span class="visually-hidden">Buscar</span>
+                <input id="search" type="search" placeholder="Buscar" />
+              </label>
+              <select id="typeFilter" aria-label="Filtrar por tipo">
+                <option value="Todos">Todos</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Tipo</th>
+                  <th>Kilómetros</th>
+                  <th>Coste</th>
+                  <th aria-label="Acciones"></th>
+                </tr>
+              </thead>
+              <tbody id="recordsTable"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <section class="backup-bar" aria-label="Archivo de datos">
+        <div>
+          <h2>Archivo de datos</h2>
+          <p>Guarda una copia JSON y cárgala en cualquier navegador para recuperar tu coche y el historial.</p>
+        </div>
+        <div class="backup-actions">
+          <button class="secondary-button" id="exportData" type="button">Guardar archivo</button>
+          <button class="secondary-button" id="importData" type="button">Cargar archivo</button>
+          <input class="visually-hidden" id="importFile" type="file" accept="application/json,.json" />
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
